@@ -59,4 +59,10 @@ public interface CustomerService {
 //    @Produces({MediaType.APPLICATION_JSON})
     void assignCustomers2FixedArea(@QueryParam("fixedAreaId") String fixedAreaId, @QueryParam("customerIds") List<Long> customerIds);
 
+    @GET
+    @Path("findByTelephone")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
+    Customer findByTelephone(@QueryParam("telephone") String telephone);
+
 }

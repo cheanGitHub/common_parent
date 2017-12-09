@@ -2,13 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="e5a1ad45-7fd8-45c5-9473-b55ad9c3bcea" name="git@github.com:cheanGitHub/Repository01.git">
-        <fileTransfer host="" port="21">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
-          </advancedOptions>
-          <option name="port" value="21" />
-        </fileTransfer>
+      <webServer id="e5a1ad45-7fd8-45c5-9473-b55ad9c3bcea" name="git@github.com:cheanGitHub/common_parent.git" url="http://localhost">
+        <fileTransfer port="0" accessType="LOCAL" />
       </webServer>
     </option>
   </component>

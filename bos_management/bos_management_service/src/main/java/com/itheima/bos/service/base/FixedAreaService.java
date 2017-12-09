@@ -14,4 +14,8 @@ public interface FixedAreaService {
     List<FixedArea> pageQuery();
 
     void associationCourierToFixedArea(Long courier_FixedAreaId, Long courierId, Long takeTimeId);
+
+    void unAssignSubAreas2FixedArea(Long id);
+
+    void assignSubAreas2FixedArea(Long id, List<Long> subAreaIds);
 }

@@ -46,7 +46,7 @@ public class SubAreaAction extends CommonAction<SubArea> {
     public String pageQuery() throws IOException {
         Pageable pageable = new PageRequest(page - 1, rows);
         Page<SubArea> page = subAeaService.pageQuery(pageable);
-        page2Json(page, new String[]{"subareas"});
+        page2Json(page, new String[]{"subareas", "fixedArea"});
         return NONE;
     }
 
@@ -61,6 +61,20 @@ public class SubAreaAction extends CommonAction<SubArea> {
     public String save() throws IOException {
         subAeaService.save(getModel());
         return SUCCESS;
+    }
+
+    @Action(value = "subAreaAction_findUnAssociatedSubAreas")
+    public String findUnAssociatedSubAreas() throws IOException {
+        List<SubArea> list = subAeaService.findByFixedAreaIsNull();
+        list2Json(list, new String[] {"fixedArea", "area"});
+        return NONE;
+    }
+
+    @Action(value = "subAreaAction_findAssociatedSubAreas")
+    public String findAssociatedSubAreas() throws IOException {
+        List<SubArea> list = subAeaService.findByFixedArea(getModel().getId());
+        list2Json(list, new String[] {"fixedArea", "area"});
+        return NONE;
     }
 
 }

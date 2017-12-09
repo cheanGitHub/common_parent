@@ -31,30 +31,7 @@
 				$('#searchWindow').window("open");
 			}
 
-			function doAssociations() {
-                var rows = $("#grid").datagrid('getSelections');
-                if (rows.length == 1) {
-                    // 弹出定区关联客户 窗口
-                    $("#customerWindow").window('open');
 
-                    $.post("../../fixedAreaAction_findUnAssociatedCustomers.action", function (data) {
-                        $("#noassociationSelect").empty();
-                        $(data).each(function (i, c) {
-                        	$("#noassociationSelect").append("<option value='" + c.id + "'>" + c.username + "[" + c.telephone + "]</option>");
-                        })
-                    });
-
-                    $.post("../../fixedAreaAction_findAssociatedCustomers.action", "id=" + rows[0].id, function (data) {
-                        $("#associationSelect").empty();
-                        $(data).each(function (i, c) {
-                            $("#associationSelect").append("<option value='" + c.id + "'>" + c.username + "[" + c.telephone + "]</option>");
-                        })
-                    });
-                }else {
-                    alert("关联客户时, 请选择单条数据")
-				}
-
-            }
 
 			//工具栏
 			var toolbar = [ {
@@ -81,7 +58,30 @@
 				id : 'button-association',
 				text : '关联客户',
 				iconCls : 'icon-sum',
-				handler : doAssociations
+				handler : 	function () {
+                    var rows = $("#grid").datagrid('getSelections');
+                    if (rows.length == 1) {
+                        // 弹出定区关联客户 窗口
+                        $("#customerWindow").window('open');
+
+                        $.post("../../fixedAreaAction_findUnAssociatedCustomers.action", function (data) {
+                            $("#noassociationSelect").empty();
+                            $(data).each(function (i, c) {
+                                $("#noassociationSelect").append("<option value='" + c.id + "'>" + c.username + "[" + c.telephone + "]</option>");
+                            })
+                        });
+
+                        $.post("../../fixedAreaAction_findAssociatedCustomers.action", "id=" + rows[0].id, function (data) {
+                            $("#associationSelect").empty();
+                            $(data).each(function (i, c) {
+                                $("#associationSelect").append("<option value='" + c.id + "'>" + c.username + "[" + c.telephone + "]</option>");
+                            })
+                        });
+                    }else {
+                        alert("关联客户时, 请选择单条数据")
+                    }
+
+                }
 			},{
 				id : 'button-association-courier',
 				text : '关联快递员',
@@ -114,7 +114,30 @@
 				id : 'button-association2',
 				text : '关联分区',
 				iconCls : 'icon-sum',
-				handler : doAssociations
+				handler : function () {
+                    var rows = $("#grid").datagrid('getSelections');
+                    if (rows.length == 1) {
+                        // 弹出定区关联分区 窗口
+                        $("#subAreaWindow").window('open');
+
+                        $.post("../../subAreaAction_findUnAssociatedSubAreas.action", function (data) {
+                            $("#noassociationSelect2").empty();
+                            $(data).each(function (i, c) {
+                                $("#noassociationSelect2").append("<option value='" + c.id + "'>" + c.keyWords + "</option>");
+                            })
+                        });
+
+                        $.post("../../subAreaAction_findAssociatedSubAreas.action", "id=" + rows[0].id, function (data) {
+                            $("#associationSelect2").empty();
+                            $(data).each(function (i, c) {
+                                $("#associationSelect2").append("<option value='" + c.id + "'>" + c.keyWords + "</option>");
+                            })
+                        });
+                    }else {
+                        alert("关联分区时, 请选择单条数据")
+                    }
+
+                }
 			}];
 			// 定义列
 			var columns = [ [ {
@@ -439,6 +462,54 @@
                     $("#fixedAreaId").val(rows[0].id);
 
                     $("#customerForm").submit();
+                }
+         </script>
+
+		<!-- 关联分区窗口 -->
+		<div modal="true" class="easyui-window" title="关联分区窗口" id="subAreaWindow" collapsible="false" closed="true" minimizable="false" maximizable="false" style="top:20px;left:200px;width: 400px;height: 300px;">
+			<div style="overflow:auto;padding:5px;" border="false">
+				<form id="subAreaForm" action="../../fixedAreaAction_assignSubAreas2FixedArea.action" method="post">
+					<table class="table-edit" width="80%" align="center">
+						<tr class="title">
+							<td colspan="3">关联分区</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="hidden" name="id" id="fixedAreaId2" />
+								<select id="noassociationSelect2" multiple="multiple" size="10"></select>
+							</td>
+							<td>
+								<input type="button" value="》》" id="toRight2" onclick="toR2()">
+								<br/>
+								<input type="button" value="《《" id="toLeft2" onclick="toL2()">
+							</td>
+							<td>
+								<select id="associationSelect2" name="subAreaIds" multiple="multiple" size="10"></select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3"><a id="associationBtn2" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="submitAssociatSubArea()">关联分区</a> </td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+        <script type="text/javascript">
+                function toR2() {
+                    $("#noassociationSelect2 option:selected").appendTo($("#associationSelect2"));
+                }
+                function toL2() {
+                    $("#associationSelect2 option:selected").appendTo($("#noassociationSelect2"));
+                }
+
+                function submitAssociatSubArea() {
+                    $("#noassociationSelect2 option").attr("selected", "selected");
+                    $("#associationSelect2 option").attr("selected", "selected");
+
+                    var rows = $("#grid").datagrid('getSelections');
+                    $("#fixedAreaId2").val(rows[0].id);
+
+                    $("#subAreaForm").submit();
                 }
          </script>
 

@@ -14,4 +14,8 @@ public interface SubAreaService {
     List<SubArea> pageQuery();
 
     void save(SubArea model);
+
+    List<SubArea> findByFixedAreaIsNull();
+
+    List<SubArea> findByFixedArea(Long id);
 }

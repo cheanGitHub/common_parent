@@ -1,11 +1,7 @@
 package com.itheima.bos.service.base.impl;
 
-import com.itheima.bos.dao.base.CourierRepository;
-import com.itheima.bos.dao.base.FixedAreaRepository;
-import com.itheima.bos.dao.base.TakeTimeRepository;
-import com.itheima.bos.domain.base.Courier;
-import com.itheima.bos.domain.base.FixedArea;
-import com.itheima.bos.domain.base.TakeTime;
+import com.itheima.bos.dao.base.*;
+import com.itheima.bos.domain.base.*;
 import com.itheima.bos.service.base.FixedAreaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,9 +45,35 @@ public class FixedAreaServiceImpl implements FixedAreaService {
         TakeTime takeTime = takeTimeRepository.findOne(takeTimeId);
 
         courier.setTakeTime(takeTime);
-        //courierRepository.save(courier);
 
         fixedArea.getCouriers().add(courier);
-        //fixedAreaRepository.save(fixedArea);
+    }
+
+    @Autowired
+    private SubAreaRepository subAreaRepository;
+
+    private List<Long> subAreaIds;
+
+    public void setSubAreaIds(List<Long> subAreaIds) {
+        this.subAreaIds = subAreaIds;
+    }
+
+    @Override
+    public void unAssignSubAreas2FixedArea(Long id) {
+        FixedArea fixedArea = fixedAreaRepository.findOne(id);
+        List<SubArea> subAreas = subAreaRepository.findByFixedArea(fixedArea);
+        for (SubArea subArea : subAreas) {
+            subArea.setFixedArea(null);
+        }
+
+    }
+
+    @Override
+    public void assignSubAreas2FixedArea(Long id, List<Long> subAreaIds) {
+        List<SubArea> subAreas = subAreaRepository.findAll(subAreaIds);
+        for (SubArea subArea : subAreas) {
+            FixedArea fixedArea = fixedAreaRepository.findOne(id);
+            subArea.setFixedArea(fixedArea);
+        }
     }
 }

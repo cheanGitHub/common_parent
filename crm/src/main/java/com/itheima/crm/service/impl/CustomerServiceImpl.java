@@ -44,5 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    @Override
+    public Customer findByTelephone(String telephone) {
+        return customerRepository.findByTelephone(telephone);
+    }
+
 
 }

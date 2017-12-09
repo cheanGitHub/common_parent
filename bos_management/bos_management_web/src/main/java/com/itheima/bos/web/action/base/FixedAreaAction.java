@@ -89,7 +89,6 @@ public class FixedAreaAction extends CommonAction<FixedArea> {
 
     @Action(value = "fixedAreaAction_assignCustomers2FixedArea", results = {@Result(name = "success", location = "/pages/base/fixed_area.html", type = "redirect")})
     public String assignCustomers2FixedArea() throws IOException {
-        System.out.println(customerIds);
         WebClient.create("http://localhost:8090/crm/webService/customerService/assignCustomers2FixedArea")
                 .query("fixedAreaId", getModel().getId().toString())
                 .query("customerIds", customerIds)
@@ -113,6 +112,22 @@ public class FixedAreaAction extends CommonAction<FixedArea> {
     @Action(value = "fixedAreaAction_associationCourierToFixedArea", results = {@Result(name = "success", location = "/pages/base/fixed_area.html", type = "redirect")})
     public String associationCourierToFixedArea() {
         fixedAreaService.associationCourierToFixedArea(getModel().getId(), courierId, takeTimeId);
+        return SUCCESS;
+    }
+
+
+
+    private List<Long> subAreaIds;
+
+    public void setSubAreaIds(List<Long> subAreaIds) {
+        this.subAreaIds = subAreaIds;
+    }
+
+    @Action(value = "fixedAreaAction_assignSubAreas2FixedArea", results = {@Result(name = "success", location = "/pages/base/fixed_area.html", type = "redirect")})
+    public String assignSubAreas2FixedArea() throws IOException {
+        fixedAreaService.unAssignSubAreas2FixedArea(getModel().getId());
+        fixedAreaService.assignSubAreas2FixedArea(getModel().getId(), subAreaIds);
+
         return SUCCESS;
     }
 }

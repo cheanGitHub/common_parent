@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="plugins/city-picker.css">
+    <script type="text/javascript" src="plugins/jquery.min.js"></script>
+    <script src="plugins/city-picker.data.js"></script>
+    <script src="plugins/city-picker.js"></script>
+</head>
+<body>
+
+html实现方式1
+<div style="position: relative;">
+    <input readonly type="text" data-toggle="city-picker" style="width:900px">
+</div>
+
+
+jQuery实现方式
+<div style="position: relative;">
+    <input id="input" type="text">
+    <input id="btn" type="button" value="重置">
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#input").citypicker()
+        $("#btn").click(function () {
+            $("#input").citypicker("reset")
+        })
+    })
+</script>
+
+</body>
+<html>
+<!-- baidu.ditu.api.password   2OND37mQrOFVbROZ1vVlsxWN3m5RpQ7u -->
