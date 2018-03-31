@@ -39,9 +39,9 @@ public class CustomerAction extends ActionSupport implements ModelDriven<Custome
     public String sendSms() {
         String telephone = getModel().getTelephone();
         String code = RandomStringUtils.randomNumeric(4);
-        ServletActionContext.getRequest().getSession().setAttribute(telephone, code);
-        System.out.println("telephone = " + telephone + "\tcode = " + code);
-        //SmsUtils.sendSmsByWebService(telephone, "尊敬的客户你好，您本次获取的验证码为：" + code);
+        System.out.println("telephone = " + telephone + "\tcode = ");
+        System.out.println("增加");
+        SmsUtils.sendSmsByWebService(telephone, "尊敬的客户你好，您本次获取的验证码为：" + code);
         return NONE;
     }
 

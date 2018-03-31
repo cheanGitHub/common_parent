@@ -164,8 +164,8 @@ public class Customer {
                 ", password='" + password + '\'' +
                 ", type=" + type +
                 ", birthday=" + birthday +
-                ", sex=" + sex +
-                ", telephone='" + telephone + '\'' +
+                ", se=" + sex +
+                ", telephonee='" + telephone + '\'' +
                 ", company='" + company + '\'' +
                 ", department='" + department + '\'' +
                 ", position='" + position + '\'' +
